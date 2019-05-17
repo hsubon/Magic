@@ -1,0 +1,42 @@
+body {
+    margin: 0;
+    padding: 0;
+    /* display: block; */
+}
+.container h1 {
+    margin: 0;
+    background: #000;
+    width: 100%;
+    padding: 10px 0;
+    color: #ffa;
+    font-size: 4rem;
+    text-transform: uppercase;
+    text-align: center;
+}
+.playground {
+    display: flex;
+    height: 843px;
+    background-image: url('img/bg-card.webp');
+}
+.playground .panel {
+    margin: 50px auto;
+    justify-content: center;
+}
+.playground .panel img {
+    display: inline-block;
+    margin: 0 10px;
+}
+.playground .play-btn {
+    position: fixed;
+    left: 42%;
+    top: 85%;
+}
+.play-btn button {
+    width: 150px;
+    font-size: 2rem;
+    border-radius: 0;
+    padding: 9px 20px;
+    cursor: pointer;
+    text-transform: uppercase;
+    text-align: center;
+}
