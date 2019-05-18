@@ -1,37 +1,90 @@
 (function() {
     
     var start = document.getElementById('start');
-    var help = document.getElementById('help');
     var panel = document.getElementById('panel')
-    var panel_count = panel.childElementCount;
-    var card1 = document.getElementById('card-1');
-    var card2 = document.getElementById('card-2');
-    var card3 = document.getElementById('card-3');
-    var card4 = document.getElementById('card-4');
-    var card5 = document.getElementById('card-5');
-    var path = card1.src;
+    var path = 'C:/Users/User/Documents/GitHub/Magic/img/';
+    let allcard = [];
+    for(i=0;i<12;i++) {
+        allcard[i] = i+1;
+    }
+
+    let fivecard = [];
+    let remaincard = [];
+    let fourcard = [];
+    
+    // function sortFunction(x,y) {
+    //     return x-y;
+    // }
+
+    // 隨機產生card (不重複)
+    function getRandomArrayElements(arr, count) {
+        var shuffled = arr.slice(0);
+        var i = arr.length;
+        var min = i - count;
+        var temp;
+        var index;
+        while (i-- > min) {
+            index = Math.floor((i + 1) * Math.random());
+            temp = shuffled[index];
+            shuffled[index] = shuffled[i];
+            shuffled[i] = temp;
+        }
+        return shuffled.slice(min);
+    }
+
+    function check(arr1, arr2) {
+        let arr = arr1.slice(0);
+        let temp;
+        for(let i=0;i<arr2.length;i++) {
+            for(let j=0;j<arr.length;j++) {
+                if(arr[j] === arr2[i]) {
+                    temp = arr[j];
+                    arr[j] = arr[arr.length-1];
+                    arr[arr.length-1] = temp;
+                    arr.pop();
+                }
+            }
+        }
+        return arr;
+    }
 
     start.addEventListener('click', () => {
-        console.log(panel_count);
-        // for(let i=0;i<panel;i++) {
-            
-        // }
-        card1.src = card1.src.replace('card0', 'card1');
-        card2.src = card2.src.replace('card0', 'card2');
-        card3.src = card3.src.replace('card0', 'card3');
-        card4.src = card4.src.replace('card0', 'card4');
-        card5.src = card5.src.replace('card0', 'card5');
-    });
+        start.disabled = 'true';
+        fivecard = getRandomArrayElements(allcard, 5);
+        remaincard = check(allcard, fivecard);
+        fourcard = getRandomArrayElements(remaincard, 4);
+        // 將card加入panel
+        for(let i=0;i<fivecard.length;i++) {
+            var DOM_img = document.createElement("img");
+            DOM_img.className = 'poker';
+            DOM_img.id = `card-${fivecard[i]}`;
+            DOM_img.src = path + `card${fivecard[i]}` + '.png';
+            panel.appendChild(DOM_img);
+        }
 
-    help.addEventListener('click', function() {
-        alert('!!!');
-    });
+        setTimeout(function() {
+            while (panel.firstChild) {
+                panel.removeChild(panel.firstChild);
+            }
+        }, 5000);
+        
+        setTimeout(function() {
+            for(let i=0;i<fourcard.length;i++) {
+                var DOM_img = document.createElement("img");
+                DOM_img.className = 'poker';
+                DOM_img.id = `card-${fourcard[i]}`;
+                DOM_img.src = path + `card${fourcard[i]}` + '.png';
+                panel.appendChild(DOM_img);
+            }
+        }, 5500);
 
-    setTimeout(function() {
-        panel.removeChild(card1);
-        card2.src = card2.src.replace('card2', 'card6');
-        card3.src = card3.src.replace('card3', 'card7');
-        card4.src = card4.src.replace('card4', 'card8');
-        card5.src = card5.src.replace('card5', 'card9');
-    }, 5000);
+        console.log(allcard);
+        console.log(fivecard);
+        console.log(remaincard);
+        console.log(fourcard);
+    });
 })();
+
+function ok() {
+    document.getElementsByClassName('mask')[0].style.display="none";
+}
